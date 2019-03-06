@@ -65,7 +65,7 @@ const ButtonContainer = styled.div`
  * https://reactjs.org/docs/react-component.html
  * @Class
  */
-class Login extends React.Component {
+class Register extends React.Component {
   /**
    * If you don’t initialize the state and you don’t bind methods, you don’t need to implement a constructor for your React component.
    * The constructor for a React component is called before it is mounted (rendered).
@@ -83,44 +83,34 @@ class Login extends React.Component {
    * HTTP POST request is sent to the backend.
    * If the request is successful, a new user is returned to the front-end and its token is stored in the localStorage.
    */
-  login() {
-    fetch(`${getDomain()}/login`, {
+  register() {
+      console.log(this.state.username, this.state.password);
+    fetch(`${getDomain()}/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
         username: this.state.username,
-        password: this.state.password
+        password: this.state.password,
+
       })
     })
       .then(response => response.json())
       .then(returnedUser => {
-        const user = new User(returnedUser);
-        if (user.error) {
-          alert("Username or password was wrong.")
-        } else {
-          console.log(user);
-          // store the token into the local storage
-          localStorage.setItem("token", user.token);
-          // user login successfully worked --> navigate to the route /game in the GameRouter
-          this.props.history.push(`/game`);
-        }
-
+        // user login successfully worked --> navigate to the route /game in the GameRouter
+        this.props.history.push(`/login`);
       })
       .catch(err => {
+        console.log(err);
         if (err.message.match(/Failed to fetch/)) {
           alert("The server cannot be reached. Did you start it?");
-        } else if (err.message.match(/Wrong Login Information/)){
-          alert("Username or password was wrong.")
+        } else if (err.message.match(/Username taken/)) {
+          alert("The username is already taken by somebody else. Use a different one.")
         } else {
           alert(`Something went wrong during the login: ${err.message}`);
         }
       });
-  }
-
-  register() {
-
   }
 
   /**
@@ -150,38 +140,34 @@ class Login extends React.Component {
           <Form>
             <Label>Username</Label>
             <InputField
-                placeholder="Enter here.."
-                onChange={e => {
-                    this.handleInputChange("username", e.target.value);
-                }}
+              placeholder="Enter here.."
+              onChange={e => {
+                this.handleInputChange("username", e.target.value);
+              }}
+              validationOption={{
+                  required: true
+              }}
             />
             <Label>Password</Label>
             <InputField
-              placeholder="Enter here.."
-              onChange={e => {
+                placeholder="Enter here.."
+                onChange={e => {
                   this.handleInputChange("password", e.target.value);
-              }}
+                }}
             />
             <ButtonContainer>
-                  <Button
-                      disabled={!this.state.username || !this.state.password}
-                      width="50%"
-                      onClick={() => {
-                          this.login();
+              <Button
+                disabled={!this.state.username || !this.state.password}
+                width="50%"
+                onClick={() => {
+                  this.register();
                 }}
               >
-                Login
+                Register
               </Button>
             </ButtonContainer>
           </Form>
         </FormContainer>
-          <ButtonContainer>
-            <Button
-                width="50%"
-                onClick={() => this.props.history.push("/register")}>
-              New User
-            </Button>
-          </ButtonContainer>
       </BaseContainer>
     );
   }
@@ -191,4 +177,4 @@ class Login extends React.Component {
  * You can get access to the history object's properties via the withRouter.
  * withRouter will pass updated match, location, and history props to the wrapped component whenever it renders.
  */
-export default withRouter(Login);
+export default withRouter(Register);

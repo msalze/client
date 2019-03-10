@@ -1,36 +1,48 @@
 import React from "react";
-import {getDomain} from "../../helpers/getDomain";
+import styled from "styled-components";
+import {BaseContainer} from "../../helpers/layout";
+
+
+const Container = styled(BaseContainer)`
+  color: white;
+  text-align: center;
+`;
 
 class Edit extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             user: null
         };
-        fetch(`${getDomain()}/users` + localStorage.id.toString(), {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }
-            .then(response => response.json())
-            .then(async user => {
-       //         await new Promise(resolve => setTimeout(resolve, 800));
-                this.setState({user});
-                console.log(user);
-            })
-            .catch(err => {
-                console.log(err);
-                alert("Something went wrong")
-            })
-        );
+       //  fetch(`${getDomain()}/users` + localStorage.id.toString(), {
+       //      method: "GET",
+       //      headers: {
+       //          "Content-Type": "application/json"
+       //      }
+       //  }
+       //      .then(response => response.json())
+       //      .then(async user => {
+       // //         await new Promise(resolve => setTimeout(resolve, 800));
+       //          this.setState({user});
+       //          console.log(user);
+       //      })
+       //      .catch(err => {
+       //          console.log(err);
+       //          alert("Something went wrong")
+       //      })
+       //  );
     }
 
-    componentDidMount() {
-        console.log("edit mounted");
+    componentDidCatch(error, info) {
+        // You can also log the error to an error reporting service
+        console.log(error, info);
     }
 
-    save() {
+    // componentDidMount() {
+    //     console.log("edit mounted");
+    // }
+
+ /*   save() {
         fetch(`${getDomain()}/users` + localStorage.id.toString(), {
             method: "PUT",
             headers: {
@@ -53,11 +65,14 @@ class Edit extends React.Component {
                 alert("Something went wrong")
             })
     }
+*/
     render() {
         return (
-            <div>hello</div>
+            <Container>
+                Hello
+            </Container>
         );
     }
 }
 
-export default withRouter(Edit);
+export default Edit;

@@ -6,7 +6,7 @@ import Player from "../../views/Player";
 import { Spinner } from "../../views/design/Spinner";
 import { Button } from "../../views/design/Button";
 import { withRouter } from "react-router-dom";
-import User from "../shared/models/User";
+import Edit from "./Edit";
 
 const Container = styled(BaseContainer)`
   color: white;
@@ -26,16 +26,24 @@ const PlayerContainer = styled.li`
 `;
 
 class Game extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      users: null
+      users: null,
+      edit: false
     };
   }
 
   logout() {
     localStorage.removeItem("token");
+    localStorage.removeItem("id");
     this.props.history.push("/login");
+  }
+
+  edit() {
+    console.log("edit");
+    this.setState({edit: true});
+    this.render();
   }
 
   componentDidMount() {
@@ -65,6 +73,11 @@ class Game extends React.Component {
   }
 
   render() {
+    if (this.state.edit) {
+      return (
+          <Edit />
+      )
+    }
     return (
       <Container>
         <h2>Happy Coding! </h2>
@@ -78,7 +91,7 @@ class Game extends React.Component {
                 return (
                   <PlayerContainer key={user.id}
                      onClick={() => {
-                       this.showInfo(user);
+                       this.edit(user);
                      }}>
                     <Player user={user} />
                   </PlayerContainer>
@@ -92,6 +105,14 @@ class Game extends React.Component {
               }}
             >
               Logout
+            </Button>
+            <Button
+                width="100%"
+                onClick={() => {
+                  this.edit();
+                }}
+            >
+              Edit
             </Button>
           </div>
         )}

@@ -72,8 +72,8 @@ class Login extends React.Component {
    * In this case the initial state is defined in the constructor. The state is a JS object containing two fields: name and username
    * These fields are then handled in the onChange() methods in the resp. InputFields
    */
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       name: null,
       username: null
@@ -103,6 +103,7 @@ class Login extends React.Component {
           console.log(user);
           // store the token into the local storage
           localStorage.setItem("token", user.token);
+          localStorage.setItem("id", user.id);
           // user login successfully worked --> navigate to the route /game in the GameRouter
           this.props.history.push(`/game`);
         }

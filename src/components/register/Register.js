@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { BaseContainer } from "../../helpers/layout";
 import { getDomain } from "../../helpers/getDomain";
-import User from "../shared/models/User";
 import { withRouter } from "react-router-dom";
 import { Button } from "../../views/design/Button";
 
@@ -72,8 +71,8 @@ class Register extends React.Component {
    * In this case the initial state is defined in the constructor. The state is a JS object containing two fields: name and username
    * These fields are then handled in the onChange() methods in the resp. InputFields
    */
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       name: null,
       username: null

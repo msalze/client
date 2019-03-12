@@ -6,7 +6,7 @@ import Player from "../../views/Player";
 import { Spinner } from "../../views/design/Spinner";
 import { Button } from "../../views/design/Button";
 import { withRouter } from "react-router-dom";
-import Edit from "./Edit";
+import Overview from "./Overview";
 
 const Container = styled(BaseContainer)`
   color: white;
@@ -30,19 +30,20 @@ class Game extends React.Component {
     super(props);
     this.state = {
       users: null,
-      edit: false
+      overview: null
     };
   }
 
   logout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("id");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("id");
     this.props.history.push("/login");
   }
 
-  edit() {
-    console.log("edit");
-    this.setState({edit: true});
+  overview(user) {
+    console.log("overview", user);
+    this.setState({overview: user});
+    console.log("state set", this.state.overview);
     this.render();
   }
 
@@ -68,14 +69,16 @@ class Game extends React.Component {
       });
   }
 
-  showInfo(user) {
-    this.props.history.push(`/game`);
-  }
-
   render() {
-    if (this.state.edit) {
+    if (this.state.overview != null) {
+      console.log(this.state.overview.state);
       return (
-          <Edit />
+          <Overview username={this.state.overview.username}
+                    status={this.state.overview.state}
+                    dateOfCreation={this.state.overview.dateOfCreation}
+                    dateOfBirth={this.state.overview.dateOfBirth}
+                    token={this.state.overview.token}
+          />
       )
     }
     return (
@@ -91,7 +94,8 @@ class Game extends React.Component {
                 return (
                   <PlayerContainer key={user.id}
                      onClick={() => {
-                       this.edit(user);
+                       this.overview(user);
+                       console.log(user, "userlog")
                      }}>
                     <Player user={user} />
                   </PlayerContainer>
@@ -105,14 +109,6 @@ class Game extends React.Component {
               }}
             >
               Logout
-            </Button>
-            <Button
-                width="100%"
-                onClick={() => {
-                  this.edit();
-                }}
-            >
-              Edit
             </Button>
           </div>
         )}

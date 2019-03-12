@@ -81,7 +81,7 @@ class Login extends React.Component {
   }
   /**
    * HTTP POST request is sent to the backend.
-   * If the request is successful, a new user is returned to the front-end and its token is stored in the localStorage.
+   * If the request is successful, a new user is returned to the front-end and its token is stored in the sessionStorage.
    */
   login() {
     fetch(`${getDomain()}/login`, {
@@ -102,8 +102,8 @@ class Login extends React.Component {
         } else {
           console.log(user);
           // store the token into the local storage
-          localStorage.setItem("token", user.token);
-          localStorage.setItem("id", user.id);
+          sessionStorage.setItem("token", user.token);
+          sessionStorage.setItem("id", user.id);
           // user login successfully worked --> navigate to the route /game in the GameRouter
           this.props.history.push(`/game`);
         }

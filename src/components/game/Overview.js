@@ -81,7 +81,6 @@ class Overview extends React.Component {
 
 
     render() {
-        console.log(this.props.status)
         if (this.state.edit) {
             return (<Edit username={this.props.username}
                           status={this.props.state ? "ONLINE" : "OFFLINE"}

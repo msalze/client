@@ -72,7 +72,6 @@ class Game extends React.Component {
 
   render() {
     if (this.state.overview != null) {
-      console.log(this.state.overview.status)
       return (
           <Overview username={this.state.overview.username}
                     status={this.state.overview.status === "ONLINE"}

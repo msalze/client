@@ -83,7 +83,6 @@ class Register extends React.Component {
    * If the request is successful, a new user is returned to the front-end and its token is stored in the localStorage.
    */
   register() {
-      console.log(this.state.username, this.state.password);
     fetch(`${getDomain()}/users`, {
       method: "POST",
       headers: {
@@ -149,6 +148,7 @@ class Register extends React.Component {
             />
             <Label>Password</Label>
             <InputField
+                type = "password"
                 placeholder="Enter here.."
                 onChange={e => {
                   this.handleInputChange("password", e.target.value);

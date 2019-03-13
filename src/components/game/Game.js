@@ -7,6 +7,7 @@ import { Spinner } from "../../views/design/Spinner";
 import { Button } from "../../views/design/Button";
 import { withRouter } from "react-router-dom";
 import Overview from "./Overview";
+import User from "../shared/models/User";
 
 const Container = styled(BaseContainer)`
   color: white;
@@ -41,9 +42,7 @@ class Game extends React.Component {
   }
 
   overview(user) {
-    console.log("overview", user);
     this.setState({overview: user});
-    console.log("state set", this.state.overview);
     this.render();
   }
 
@@ -60,8 +59,10 @@ class Game extends React.Component {
         // This is just a fake async call, so that the spinner can be displayed
         // feel free to remove it :)
         await new Promise(resolve => setTimeout(resolve, 800));
-
         this.setState({ users });
+        if (users.length < 1) {
+          this.logout();
+        }
       })
       .catch(err => {
         console.log(err);
@@ -71,10 +72,10 @@ class Game extends React.Component {
 
   render() {
     if (this.state.overview != null) {
-      console.log(this.state.overview.state);
+      console.log(this.state.overview.status)
       return (
           <Overview username={this.state.overview.username}
-                    status={this.state.overview.state}
+                    status={this.state.overview.status === "ONLINE"}
                     dateOfCreation={this.state.overview.dateOfCreation}
                     dateOfBirth={this.state.overview.dateOfBirth}
                     token={this.state.overview.token}
@@ -95,7 +96,6 @@ class Game extends React.Component {
                   <PlayerContainer key={user.id}
                      onClick={() => {
                        this.overview(user);
-                       console.log(user, "userlog")
                      }}>
                     <Player user={user} />
                   </PlayerContainer>

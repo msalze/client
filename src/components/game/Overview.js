@@ -35,7 +35,6 @@ class Overview extends React.Component {
             edit: false,
             back: false
         };
-        console.log(props);
         let users = null;
         fetch(`${getDomain()}/users/` + sessionStorage.id.toString(), {
             method: "GET",
@@ -47,7 +46,6 @@ class Overview extends React.Component {
             .then(async user => {
                 //         await new Promise(resolve => setTimeout(resolve, 800));
                 users = user;
-                console.log(user, this.state);
 
             })
             .catch(err => {
@@ -67,8 +65,6 @@ class Overview extends React.Component {
     }
 
      componentDidMount() {
-         console.log("edit mounted");
-         console.log(`${getDomain()}/users/` + sessionStorage.id.toString());
         this.render();
      }
 
@@ -85,9 +81,10 @@ class Overview extends React.Component {
 
 
     render() {
+        console.log(this.props.status)
         if (this.state.edit) {
             return (<Edit username={this.props.username}
-                          status={this.props.state}
+                          status={this.props.state ? "ONLINE" : "OFFLINE"}
                           dateOfCreation={this.props.dateOfCreation}
                           dateOfBirth={this.props.dateOfBirth}
                           token={this.props.token} />)
@@ -103,7 +100,7 @@ class Overview extends React.Component {
                             Username: {this.props.username}
                         </div>
                         <div>
-                            Status: {this.props.status}
+                            Status: {this.props.status ? "ONLINE" : "OFFLINE"}
                         </div>
                         <div>
                             Date of Creation: {this.props.dateOfCreation}

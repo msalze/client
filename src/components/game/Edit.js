@@ -45,8 +45,6 @@ class Edit extends React.Component {
     }
 
      componentDidMount() {
-         console.log("edit mounted");
-         console.log(`${getDomain()}/users/` + sessionStorage.id.toString());
          fetch(`${getDomain()}/users/` + sessionStorage.id.toString(), {
                  method: "GET",
                  headers: {
@@ -57,37 +55,29 @@ class Edit extends React.Component {
                  .then(async user => {
                      //         await new Promise(resolve => setTimeout(resolve, 800));
                      this.setState({user});
-                     console.log(user, this.state);
 
                  })
                  .catch(err => {
-                     console.log(err);
                      alert("Something went wrong")
                  });
      }
 
      handleChange(e) {
-        console.log(e.target);
         if (e.target.type === "text") {
             this.setState({ username: e.target.value });
         } else if (e.target.type === "date") {
             this.setState({dateOfBirth: e.target.value});
         }
-         console.log(this.state);
      }
 
     save() {
         let user = new User();
-        console.log(user, this.state.username, this.state.dateOfBirth);
         if (this.state.username !== null) {
             user.username = this.state.username;
         }
         if (this.state.dateOfBirth !== null) {
             user.dateOfBirth = this.state.dateOfBirth;
         }
-        console.log(user);
-        console.log(JSON.stringify(user));
-        console.log('${getDomain()}/users/', sessionStorage.id.toString());
         fetch(`${getDomain()}/users/` + sessionStorage.id.toString(), {
             method: "PUT",
             headers: {

@@ -100,7 +100,6 @@ class Login extends React.Component {
         if (user.error) {
           alert("Username or password was wrong.")
         } else {
-          console.log(user);
           // store the token into the local storage
           sessionStorage.setItem("token", user.token);
           sessionStorage.setItem("id", user.id);
@@ -158,6 +157,7 @@ class Login extends React.Component {
             />
             <Label>Password</Label>
             <InputField
+                type = "password"
               placeholder="Enter here.."
               onChange={e => {
                   this.handleInputChange("password", e.target.value);

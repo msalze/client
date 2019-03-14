@@ -83,7 +83,7 @@ class Login extends React.Component {
    * HTTP POST request is sent to the backend.
    * If the request is successful, a new user is returned to the front-end and its token is stored in the sessionStorage.
    */
-  login() {
+  login() { // login with input, error causes no change (stays at same route)
     fetch(`${getDomain()}/login`, {
       method: "POST",
       headers: {

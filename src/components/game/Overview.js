@@ -60,7 +60,7 @@ class Overview extends React.Component {
     }
 
     componentDidCatch(error, info) {
-        // You can also log the error to an error reporting service
+        // log the error to console
         console.log(error, info);
     }
 
@@ -68,7 +68,7 @@ class Overview extends React.Component {
         this.render();
      }
 
-     edit() {
+     edit() { // compare token with sessionstorage to ensure correct access
         if (this.props.token === sessionStorage.getItem("token")){
             this.setState({edit: true})
         } else alert("Logged in Users can only edit their own page.")

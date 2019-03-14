@@ -34,13 +34,13 @@ class Edit extends React.Component {
             user: null,
             username: null,
             dateOfBirth: null,
-            updateSuccessful: false
+            updateSuccessful: false // if true, gets redirected to overview
         };
 
     }
 
     componentDidCatch(error, info) {
-        // You can also log the error to an error reporting service
+        // log the error to console
         console.log(error, info);
     }
 
@@ -53,8 +53,7 @@ class Edit extends React.Component {
              })
                  .then(response => response.json())
                  .then(async user => {
-                     //         await new Promise(resolve => setTimeout(resolve, 800));
-                     this.setState({user});
+                     this.setState({user}); // update and render
 
                  })
                  .catch(err => {
@@ -62,7 +61,7 @@ class Edit extends React.Component {
                  });
      }
 
-     handleChange(e) {
+     handleChange(e) { // change state when user input happens
         if (e.target.type === "text") {
             this.setState({ username: e.target.value });
         } else if (e.target.type === "date") {
@@ -70,7 +69,7 @@ class Edit extends React.Component {
         }
      }
 
-    save() {
+    save() { // save entered data to data base
         let user = new User();
         if (this.state.username !== null) {
             user.username = this.state.username;
@@ -90,7 +89,7 @@ class Edit extends React.Component {
         })
             .then(response => {
                 if (response.status === 204) {
-                    this.setState({updateSuccessful: true})
+                    this.setState({updateSuccessful: true}) // redirect to overview
                 } else if (response.status === 409) {
                     alert("The username is already taken")
                 }

@@ -60,7 +60,7 @@ class Game extends React.Component {
         // feel free to remove it :)
         await new Promise(resolve => setTimeout(resolve, 800));
         this.setState({ users });
-        if (users.length < 1) {
+        if (users.length < 1) { // if no user is in repository, go back to login
           this.logout();
         }
       })
@@ -74,7 +74,7 @@ class Game extends React.Component {
     if (this.state.overview != null) {
       return (
           <Overview username={this.state.overview.username}
-                    status={this.state.overview.status === "ONLINE"}
+                    status={this.state.overview.status === "ONLINE"} // pass true for online, false for offline
                     dateOfCreation={this.state.overview.dateOfCreation}
                     dateOfBirth={this.state.overview.dateOfBirth}
                     token={this.state.overview.token}
